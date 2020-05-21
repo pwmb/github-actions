@@ -53,6 +53,7 @@ def main():
         json.dump(event, sys.stdout, indent=4)
 
     print("######HERE######")
+    print(os.environ)
 
     event_name = os.environ['GITHUB_EVENT_NAME']  # The name of the webhook event that triggered the workflow.
     action = event["action"]
