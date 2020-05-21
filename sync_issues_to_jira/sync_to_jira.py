@@ -32,9 +32,9 @@ def main():
         print('Not running in GitHub action context, nothing to do')
         return
 
-    if not os.environ['GITHUB_REPOSITORY'].startswith('espressif/'):
-        print('Not an Espressif repo, nothing to sync to JIRA')
-        return
+    # if not os.environ['GITHUB_REPOSITORY'].startswith('espressif/'):
+    #     print('Not an Espressif repo, nothing to sync to JIRA')
+    #     return
 
     # Connect to Jira server
     print('Connecting to Jira Server...')
@@ -51,6 +51,8 @@ def main():
     with open(os.environ['GITHUB_EVENT_PATH'], 'r') as f:
         event = json.load(f)
         json.dump(event, sys.stdout, indent=4)
+
+    print("######HERE######")
 
     event_name = os.environ['GITHUB_EVENT_NAME']  # The name of the webhook event that triggered the workflow.
     action = event["action"]
