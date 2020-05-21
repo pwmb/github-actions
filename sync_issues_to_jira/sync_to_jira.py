@@ -50,10 +50,12 @@ def main():
 
     # Check if WhiteList Labels are passed if so halt execution based on condition
     whitelist_issue_labels = os.environ.get('INPUT_WHITELIST-ISSUE-LABELS')
-
+    print(whitelist_issue_labels)
     if whitelist_issue_labels is not None:
         whitelist_issue_labels = set(whitelist_issue_labels.split(","))
-        issue_labels = set(event['issue']['labels'])
+        issue_labels = set(map(lambda l: l['name'], event['issue']['labels']))
+
+        print(whitelist_issue_labels, issue_labels)
 
         intersection_labels = whitelist_issue_labels.intersection(issue_labels)
 
