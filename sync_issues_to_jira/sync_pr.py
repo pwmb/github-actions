@@ -27,6 +27,9 @@ def sync_remain_prs(jira):
     github = Github(os.environ['GITHUB_TOKEN'])
     repo = github.get_repo(os.environ['GITHUB_REPOSITORY'])
     prs = repo.get_pulls(state="open", sort="created", direction="desc")
+    # Check if WhiteList Labels are passed if so halt execution based on condition
+    whitelist_issue_labels = os.environ.get('INPUT_WHITELIST-ISSUE-LABELS')
+    print(whitelist_issue_labels)
     for pr in prs:
         if not pr.comments:
             # mock a github issue using current PR
