@@ -43,6 +43,11 @@ def main():
                              os.environ['JIRA_PASS']))
 
 
+    # Check if it's a cron job
+    if os.environ.get('INPUT_CRON_JOB'):
+        sync_remain_prs(jira)
+        return
+
     # The path of the file with the complete webhook event payload. For example, /github/workflow/event.json.
     with open(os.environ['GITHUB_EVENT_PATH'], 'r') as f:
         event = json.load(f)
@@ -62,11 +67,6 @@ def main():
         if len(intersection_labels) == 0:
             print("WHITELIST-ISSUE-LABELS is set but not matched with any labels from issue labels")
             return
-
-    # Check if it's a cron job
-    if os.environ.get('INPUT_CRON_JOB'):
-        sync_remain_prs(jira)
-        return
 
     event_name = os.environ['GITHUB_EVENT_NAME']  # The name of the webhook event that triggered the workflow.
     action = event["action"]
